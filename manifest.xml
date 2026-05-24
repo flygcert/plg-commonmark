@@ -3,7 +3,7 @@
 	<update>
 		<name>CommonMark Plugin</name>
 		<description>CommonMark Plugin</description>
-		<element>plg_content_commonmark</element>
+		<element>commonmark</element>
 		<type>plugin</type>
 		<folder>content</folder>
 		<version>5.0.0</version>
