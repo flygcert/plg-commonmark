@@ -1,0 +1,92 @@
+name: "Create release"
+
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ develop ]
+
+jobs:
+
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Sets variables
+        run: |
+          if [[ "$GITHUB_HEAD_REF" =~ ^release/(.+)$ ]]; then
+            RELEASE_VERSION="${BASH_REMATCH[1]}"
+          else
+            echo "ERROR: Branch '$GITHUB_HEAD_REF' does not match 'release/{version}'"
+            exit 1
+          fi
+
+          [[ "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo "ERROR: '$RELEASE_VERSION' is not a valid version (expected MAJOR.MINOR.PATCH)"
+            exit 1
+          }
+
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+
+      - name: Build release package
+        run: |
+          ./build/composer-install
+          vendor/bin/robo build
+
+          BUILD_ZIP="$(find dist -maxdepth 1 -type f -name "*-${RELEASE_VERSION}.zip" | head -n1)"
+          if [[ -z "$BUILD_ZIP" ]]; then
+            BUILD_ZIP="$(find dist -maxdepth 1 -type f -name "*.zip" ! -name "*-current.zip" | head -n1)"
+          fi
+          [[ -n "$BUILD_ZIP" ]] || {
+            echo "ERROR: No real zip package found in /dist"
+            exit 1
+          }
+
+          echo "BUILD_ZIP=$BUILD_ZIP" >> "$GITHUB_ENV"
+
+      - name: Get GitHub App User ID
+        id: get-user-id
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+          git tag -a $RELEASE_VERSION -m "release: $RELEASE_VERSION"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git push origin $RELEASE_VERSION
+          gh release create $RELEASE_VERSION "$BUILD_ZIP" --title "$RELEASE_VERSION" --generate-notes
+
+      - name: Checkout Develop
+        uses: actions/checkout@v6
+        with:
+          ref: develop
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Merge current -> develop
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git checkout ${{ github.head_ref }}
+          git checkout develop
+          git merge --no-ff ${{ github.head_ref }}
+          git push origin develop

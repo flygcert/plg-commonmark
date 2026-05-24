@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+chdir(__DIR__ . '/..');
+
+echo "# Running composer update for platform\n\n";
+composer_install('src/plugins/content/commonmark');
+
+function composer_install($folder)
+{
+    chdir($folder);
+
+    system('composer update --no-dev --no-progress --ignore-platform-reqs', $composerReturnCode);
+
+    if ($composerReturnCode !== 0) {
+        echo "`composer update` did not complete as expected in $folder.\n";
+        exit(1);
+    }
+
+    chdir(preg_replace('|[^/]+|', '..', $folder));
+}

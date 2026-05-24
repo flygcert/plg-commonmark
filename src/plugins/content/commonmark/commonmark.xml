@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" group="content" method="upgrade">
+	<name>plg_content_commonmark</name>
+	<author>Peter Szalatnay</author>
+	<creationDate>##DATE##</creationDate>
+	<copyright>Copyright (C) 2007 - ##YEAR## Flygcert FZE. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@flygcert.com</authorEmail>
+	<authorUrl>flygcert.com</authorUrl>
+	<version>##VERSION##</version>
+	<description>PLG_CONTENT_COMMONMARK_XML_DESCRIPTION</description>
+	<namespace path="src">Flygcert\Plugin\Content\CommonMark</namespace>
+
+	<files>
+		##FILES##
+	</files>
+</extension>
