@@ -1,0 +1,18 @@
+name: 'Setup Dependencies'
+description: 'Install Composer dependencies with caching'
+inputs:
+  composer-cache-key:
+    description: 'Composer cache key'
+    required: false
+    default: 'composer'
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache Composer dependencies
+      uses: actions/cache@v5
+      with:
+        path: /tmp/composer-cache
+        key: ${{ inputs.composer-cache-key }}-cache-v1
+    - name: Install Composer dependencies
+      shell: bash
+      run: composer install --no-progress --ignore-platform-reqs
