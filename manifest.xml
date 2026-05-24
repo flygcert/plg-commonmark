@@ -5,6 +5,7 @@
 		<description>CommonMark Plugin</description>
 		<element>plg_content_commonmark</element>
 		<type>plugin</type>
+		<folder>content</folder>
 		<version>5.0.0</version>
 		<client>site</client>
 		<infourl title="CommonMark Plugin">https://github.com/flygcert/plg-commonmark/releases/tag/5.0.0</infourl>
