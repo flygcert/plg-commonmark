@@ -9,9 +9,6 @@
 	<!-- Exclude 3rd party libraries and Framework code. -->
     <exclude-pattern type="relative">*/vendor/*</exclude-pattern>
 
-    <!-- Exclude 3rd party libraries and Framework code. -->
-    <exclude-pattern type="relative">src/administrator/components/com_datasync/layouts/*</exclude-pattern>
-
     <rule ref="PSR12" />
 
     <!-- temporary extend the line length -->
@@ -20,29 +17,5 @@
             <property name="lineLimit" value="560"/>
             <property name="absoluteLineLimit" value="560"/>
         </properties>
-    </rule>
-
-    <rule ref="PSR1.Classes.ClassDeclaration">
-	    <exclude-pattern type="relative">src/administrator/components/com_datasync/script\.php</exclude-pattern>
-        <exclude-pattern type="relative">src/administrator/manifests/packages/datasync/script\.php</exclude-pattern>
-    </rule>
-
-    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
-	    <exclude-pattern type="relative">src/administrator/components/com_datasync/src/Table/*\.php</exclude-pattern>
-    </rule>
-
-    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
-        <exclude-pattern type="relative">src/administrator/components/com_datasync/script\.php</exclude-pattern>
-	    <exclude-pattern type="relative">src/administrator/manifests/packages/datasync/script\.php</exclude-pattern>
-    </rule>
-
-    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-		<exclude-pattern type="relative">src/administrator/components/com_datasync/src/Model/SyncsModel\.php</exclude-pattern>
-        <exclude-pattern type="relative">src/administrator/components/com_datasync/src/Table/*\.php</exclude-pattern>
-    </rule>
-
-    <rule ref="Squiz.Classes.ValidClassName">
-        <exclude-pattern type="relative">src/administrator/components/com_datasync/script\.php</exclude-pattern>
-	    <exclude-pattern type="relative">src/administrator/manifests/packages/datasync/script\.php</exclude-pattern>
     </rule>
 </ruleset>
