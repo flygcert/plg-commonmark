@@ -33,7 +33,7 @@ Are you new with github? Here you can find information about setting it up: http
 
 ```
 /var/www/html/plg-commonmark$ ls
-docs  LICENSE	RoboFile.dist.ini
+LICENSE	RoboFile.dist.ini
 composer.json	 manifest.xml	RoboFile.php
 composer.lock	 jorobo.dist.ini  README.md	src
 ```

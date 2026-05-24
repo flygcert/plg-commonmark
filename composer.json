@@ -25,9 +25,7 @@
       "build/composer-install",
       "vendor/bin/robo build"
     ],
-    "map": "vendor/bin/robo map /home/flowman/Projects/flygcert/platform true",
     "phpcs": "phpcs --extensions=php -p --standard=ruleset.xml src/",
-    "php-cs-fixer": "php-cs-fixer check -vvv --diff",
-    "php-cs-fixer-fix": "php-cs-fixer fix -vvv"
+    "php-cs-fixer": "php-cs-fixer check -vvv --diff"
   }
 }

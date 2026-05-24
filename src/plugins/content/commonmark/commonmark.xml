@@ -14,4 +14,9 @@
 	<files>
 		##FILES##
 	</files>
+
+	<updateservers>
+		<!-- Note: No spaces or linebreaks allowed between the server tags -->
+		<server type="extension" name="CommonMark Update Site">https://raw.githubusercontent.com/flygcert/plg-commonmark/refs/heads/main/manifest.xml</server>
+	</updateservers>
 </extension>
