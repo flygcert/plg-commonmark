@@ -5,11 +5,11 @@
 		<description>CommonMark Plugin</description>
 		<element>plg_content_commonmark</element>
 		<type>plugin</type>
-		<version>4.0.0</version>
+		<version>5.0.0</version>
 		<client>site</client>
-		<infourl title="CommonMark Plugin">https://github.com/flygcert/plg-commonmark/releases/tag/4.0.0</infourl>
+		<infourl title="CommonMark Plugin">https://github.com/flygcert/plg-commonmark/releases/tag/5.0.0</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/flygcert/plg-commonmark/releases/download/4.0.0/plg_content_commonmark-4.0.0.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/flygcert/plg-commonmark/releases/download/5.0.0/plg_content_commonmark-5.0.0.zip</downloadurl>
 		</downloads>
 		<tags>
             <tag>stable</tag>
