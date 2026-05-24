@@ -1,0 +1,23 @@
+{
+  "name": "flygcert/commonmark",
+  "description": "CommonMark Plugin",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Peter Szalatnay",
+      "homepage": "https://flygcert.com",
+      "role": "Lead Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "8.3.0"
+    }
+  },
+  "require": {
+    "league/commonmark": "^2.5",
+    "jsw/commonmark-figure-extension": "^1.2"
+  }
+}
