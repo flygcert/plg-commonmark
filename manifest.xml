@@ -3,8 +3,9 @@
 	<update>
 		<name>CommonMark Plugin</name>
 		<description>CommonMark Plugin</description>
-		<element>plg_content_commonmark</element>
+		<element>commonmark</element>
 		<type>plugin</type>
+		<folder>content</folder>
 		<version>4.0.0</version>
 		<client>site</client>
 		<infourl title="CommonMark Plugin">https://github.com/flygcert/plg-commonmark/releases/tag/4.0.0</infourl>
