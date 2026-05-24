@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<update>
+		<name>CommonMark Plugin</name>
+		<description>CommonMark Plugin</description>
+		<element>plg_content_commonmark</element>
+		<type>plugin</type>
+		<version>4.0.0</version>
+		<client>site</client>
+		<infourl title="CommonMark Plugin">https://github.com/flygcert/plg-commonmark/releases/tag/4.0.0</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/flygcert/plg-commonmark/releases/download/4.0.0/plg_content_commonmark-4.0.0.zip</downloadurl>
+		</downloads>
+		<tags>
+            <tag>stable</tag>
+        </tags>
+		<targetplatform name="joomla" version="6\.[012]" />
+	</update>
+</updates>
