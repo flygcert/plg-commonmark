@@ -51,6 +51,7 @@ if [[ $RESPONSE =~ ^([yY][eE][sS]|[yY])$ ]]; then
 	message ">>>>> Creating branch '$BRANCH_NAME' from develop..."
 
 	git checkout -b "$BRANCH_NAME" develop
+	git commit --allow-empty -m "Release - $RELEASE_VERSION"
 	git push origin "$BRANCH_NAME"
 	gh pr create --base develop --head "$BRANCH_NAME" --title "Release - $RELEASE_VERSION" --fill
 else
