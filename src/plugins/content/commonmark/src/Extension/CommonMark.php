@@ -3,7 +3,7 @@
 /**
  * @package     CommonMark
  *
- * @copyright   (C) 2007 - 2022 Flygcert FZE. All rights reserved.
+ * @copyright   (C) 2007 - 2026 Flygcert FZE. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -34,6 +34,14 @@ use League\CommonMark\MarkdownConverter;
  */
 final class CommonMark extends CMSPlugin implements SubscriberInterface
 {
+    /**
+     * Cached CommonMark converter instance.
+     *
+     * @var   MarkdownConverter|null
+     * @since 5.0.1
+     */
+    private static ?MarkdownConverter $converter = null;
+
     /**
      * Load the language file on instantiation.
      *
@@ -114,14 +122,14 @@ final class CommonMark extends CMSPlugin implements SubscriberInterface
                 }
 
                 if (isset($node->{$nodes[$i]})) {
-                    switch (true) {
-                        case \is_object($node):
-                            $node->{$nodes[$i]} = $converter->convert($node->{$nodes[$i]})->getContent();
-                            break;
+                    $data = \is_string($node->{$nodes[$i]})
+                            ? $converter->convert($node->{$nodes[$i]})->getContent()
+                            : $node->{$nodes[$i]};
 
-                        case \is_array($node):
-                            $node[$nodes[$i]] = $converter->convert($node->{$nodes[$i]})->getContent();
-                            break;
+                    if (\is_object($node)) {
+                        $node->{$nodes[$i]} = $data;
+                    } elseif (\is_array($node)) {
+                        $node[$nodes[$i]] = $data;
                     }
                 }
             }
@@ -129,16 +137,16 @@ final class CommonMark extends CMSPlugin implements SubscriberInterface
 
 
         if (property_exists($item, 'text')) {
-            $item->text = $item->text ? $converter->convert($item->text)->getContent() : $item->text;
+            $item->text = \is_string($item->text) ? $converter->convert($item->text)->getContent() : $item->text;
         }
 
         if (property_exists($item, 'page')) {
-            $item->page->text = $item->page->text ? $converter->convert($item->page->text)->getContent() : $item->page->text;
+            $item->page->text = \is_string($item->page->text) ? $converter->convert($item->page->text)->getContent() : $item->page->text;
         }
 
         if (property_exists($item, 'pages')) {
             foreach ($item->pages as $node) {
-                $node->text = $node->text ? $converter->convert($node->text)->getContent() : $node->text;
+                $node->text = \is_string($node->text) ? $converter->convert($node->text)->getContent() : $node->text;
             }
         }
     }
@@ -152,6 +160,10 @@ final class CommonMark extends CMSPlugin implements SubscriberInterface
      */
     public static function getConverter(): MarkdownConverter
     {
+        if (self::$converter !== null) {
+            return self::$converter;
+        }
+
         $config = [
             'html_input'         => 'allow',
             'allow_unsafe_links' => false,
@@ -173,7 +185,9 @@ final class CommonMark extends CMSPlugin implements SubscriberInterface
         $environment->addExtension(new FigureExtension());
         $environment->addExtension(new FrontMatterExtension());
 
-        return new MarkdownConverter($environment);
+        self::$converter = new MarkdownConverter($environment);
+
+        return self::$converter;
     }
 
     /**
